@@ -27,7 +27,7 @@ type ParsedMessage struct {
 	DurationMinute int
 }
 
-type baleUpdate struct {
+type BaleUpdate struct {
 	UpdateID int64 `json:"update_id"`
 	Message  struct {
 		MessageID int64 `json:"message_id"`
@@ -50,7 +50,7 @@ type baleUpdate struct {
 }
 
 
-func ParseUpdate(u baleUpdate) ParsedMessage {
+func ParseUpdate(u BaleUpdate) ParsedMessage {
 	msg := ParsedMessage{
 		ChatID:     u.Message.Chat.ID,
 		FromUserID: u.Message.From.ID,
