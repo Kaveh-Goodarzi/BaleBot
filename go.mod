@@ -1,6 +1,6 @@
 module bale-moderator-bot
 
-go 1.25.4
+go 1.25
 
 require modernc.org/sqlite v1.44.3
 
