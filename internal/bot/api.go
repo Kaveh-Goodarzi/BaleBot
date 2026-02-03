@@ -5,7 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-
+	"os"
+	"log"
 	"bale-moderator-bot/config"
 )
 
@@ -20,7 +21,7 @@ func call(method string, payload any) error {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != 200 {
-		return fmt.Errorf("%s failed: %s", method, resp.Status)
+		log.Printf("%s failed: %s", method, resp.Status)
 	}
 	return nil
 }
@@ -44,4 +45,12 @@ func BanUser(chatID, userID int64) {
 		"chat_id": chatID,
 		"user_id": userID,
 	})
+}
+
+func GetPort() string {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	return port
 }

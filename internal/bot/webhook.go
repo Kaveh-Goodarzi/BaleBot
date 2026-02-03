@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"os"
 
 	"bale-moderator-bot/config"
 	"bale-moderator-bot/internal/db"
@@ -15,16 +14,10 @@ type Update struct {
 	Message struct {
 		MessageID int64  `json:"message_id"`
 		Text      string `json:"text"`
-		Chat      struct {
-			ID int64 `json:"id"`
-		}
-		From struct {
-			ID int64 `json:"id"`
-		}
+		Chat      struct{ ID int64 `json:"id"` }
+		From      struct{ ID int64 `json:"id"` }
 		ReplyToMessage *struct {
-			From struct {
-				ID int64 `json:"id"`
-			}
+			From struct{ ID int64 `json:"id"` }
 		} `json:"reply_to_message"`
 	} `json:"message"`
 }
@@ -34,12 +27,8 @@ func Start() {
 	setWebhook()
 
 	http.HandleFunc("/webhook", handle)
-	fmt.Println("Bot running on :8080")
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-	}
-	http.ListenAndServe(":"+port, nil)
+	fmt.Println("Bot running on port:", GetPort())
+	http.ListenAndServe(":"+GetPort(), nil)
 }
 
 func setWebhook() {
